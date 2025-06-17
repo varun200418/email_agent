@@ -1,0 +1,179 @@
+{
+  "name": "multi agents",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "864f8108-81a2-4632-959c-73a0ab400cdc",
+      "name": "When chat message received",
+      "webhookId": "cd5be8b8-d4a6-451b-ad79-fac86b0cd3a9"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# Overview\nYou are an Orchestra agent. Your job is to delegate the task to the correct tool.\nNo need to write emails or create summaries"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "40911f79-6439-4d35-bb4c-8fb7e06b3e85",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        200,
+        220
+      ],
+      "id": "e0a8147e-8695-4e01-9709-3c3652ceb559",
+      "name": "GPT-mini 4.0",
+      "credentials": {
+        "openAiApi": {
+          "id": "tDypz7uxUmLFU0JX",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to take an action aganist it.",
+        "workflowId": {
+          "__rl": true,
+          "value": "vVoDdgEP5dHUqjtZ",
+          "mode": "list",
+          "cachedResultName": "workflow_1"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        220
+      ],
+      "id": "10f003e2-2cf6-4ad8-94e3-91cda3b2deff",
+      "name": "Email Agent"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Base', ``, 'string') }}",
+          "mode": "id"
+        },
+        "table": {
+          "__rl": true,
+          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Table', ``, 'string') }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        220
+      ],
+      "id": "1f72b7e6-093d-4fba-9e7c-4e5373632221",
+      "name": "Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "6pdT0pGTZx14jWxk",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-mini 4.0": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Airtable": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3bdc8219-1e80-41e3-8858-fb0e4a7433f4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "12c1f17699a21f708d1a7286cd22cd1fb5ad10f55fbb737aef55bee1d0d5c459"
+  },
+  "id": "bn15VqeILTD1TQjn",
+  "tags": []
+}
