@@ -11,3 +11,7 @@ This repository contains an automated Email Agent built using n8n, a powerful wo
     🧩 Fully customizable and extensible via n8n's visual interface
 
     🔐 Secure handling of credentials and message content
+
+https://snipyjs12.app.n8n.cloud/workflow/bn15VqeILTD1TQjn(Main agent)
+
+https://snipyjs12.app.n8n.cloud/workflow/vVoDdgEP5dHUqjtZ(Sub Agent)
